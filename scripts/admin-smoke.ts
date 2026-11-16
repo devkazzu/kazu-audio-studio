@@ -1,0 +1,34 @@
+import "dotenv/config";
+import assert from "node:assert/strict";
+import { db, pool } from "../src/db/index";
+import { users, userRoles, appReleases, announcements, themeConfigs, visualizerPresets, adminAuditLogs } from "../src/db/schema";
+import { eq } from "drizzle-orm";
+import { BUILTIN_PRESETS } from "../src/lib/audio-studio/presets";
+import { DEFAULT_THEME } from "../src/lib/audio-studio/types";
+const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3000";
+async function main() {
+  const email = process.env.ADMIN_EMAIL, password = process.env.ADMIN_PASSWORD;
+  if (!email || !password) throw new Error("Set trusted ADMIN_EMAIL and ADMIN_PASSWORD for the smoke test.");
+  const login = await fetch(`${base}/api/auth`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "login", email, password }) });
+  assert.equal(login.status, 200); const cookie = login.headers.get("set-cookie")!.split(";")[0];
+  const request = async (section: string, data?: Record<string, unknown>, expected = 200) => { const response = await fetch(`${base}/api/admin/${section}`, { method: data ? "POST" : "GET", headers: { Cookie: cookie, ...(data ? { "Content-Type": "application/json" } : {}) }, ...(data ? { body: JSON.stringify(data) } : {}) }); const result = await response.json(); assert.equal(response.status, expected, `${section}: ${JSON.stringify(result)}`); return result; };
+  const dashboard = await request("dashboard"); assert.equal(typeof dashboard.users, "number");
+  const release = await request("updates", { action: "create", version: `1.${Date.now()}.0`, title: "Smoke test release", releaseDate: new Date().toISOString().slice(0, 10), notes: "Testing actual published updates.", features: ["Studio"], fixes: [], improvements: [], status: "published" });
+  const announcement = await request("announcements", { action: "create", title: "Smoke test announcement", body: "Published announcement verification.", audience: "all", priority: "normal", pinned: true, status: "published" });
+  const theme = await request("themes", { action: "create", name: "Smoke test Sakura", config: DEFAULT_THEME, status: "published" });
+  const content = await fetch(`${base}/api/content`).then(r => r.json()); assert(content.releases.some((r: { id: string }) => r.id === release.id)); assert(content.announcements.some((r: { id: string }) => r.id === announcement.id)); assert(content.theme);
+  await request("features", { action: "update", key: "video_export", name: "Video Export", enabled: false });
+  assert.equal((await fetch(`${base}/api/studio`, { method: "POST", headers: { Cookie: cookie, "Content-Type": "application/json" }, body: JSON.stringify({ projectId: crypto.randomUUID(), duration: 2, width: 854, height: 480 }) })).status, 403);
+  await request("features", { action: "update", key: "video_export", name: "Video Export", enabled: true });
+  const preset = await request("presets", { action: "create", name: "Admin smoke preset", config: BUILTIN_PRESETS[0].config, status: "published", category: "Custom" }); assert(content.presets.length > 0);
+  await request("presets", { action: "archive", id: preset.id });
+  await request("updates", { action: "archive", id: release.id }); await request("announcements", { action: "archive", id: announcement.id });
+  await request("themes", { action: "create", name: "Restore Sakura", config: DEFAULT_THEME, status: "published" });
+  const audit = await request("audit-logs"); assert(audit.records.some((r: { action: string }) => r.action === "themes.create"));
+  const [admin] = await db.select().from(users).where(eq(users.email, email.toLowerCase())); assert(admin);
+  await request("users", { action: "update", id: admin.id, status: "suspended" }, 400);
+  const denied = await fetch(`${base}/api/admin/users`, { method: "POST", headers: { Cookie: cookie, "Content-Type": "application/json" }, body: JSON.stringify({ action: "update", id: admin.id, role: "user" }) }); assert.equal(denied.status, 400);
+  await db.update(users).set({ status: "suspended" }).where(eq(users.id, admin.id));
+  console.log("Admin smoke test passed: releases, announcements, themes, feature enforcement, presets, audit, self-role protection, account suspension.");
+}
+main().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => pool.end());
