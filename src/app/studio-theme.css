@@ -1,0 +1,383 @@
+@layer components {
+  :root {
+    --muted: color-mix(in srgb, var(--text) 48%, transparent);
+  }
+  .button {
+    border-radius: calc(var(--radius) * 0.67);
+    background: color-mix(in srgb, var(--surface) 85%, var(--primary) 5%);
+  }
+  .button.primary {
+    background: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--primary) 85%, white 15%),
+      color-mix(in srgb, var(--primary) 85%, #4f187c 15%)
+    );
+    border-color: color-mix(in srgb, var(--primary) 65%, transparent);
+    box-shadow: 0 3px 14px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+  .button.primary:hover {
+    background: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--primary) 75%, white 25%),
+      var(--primary)
+    );
+    box-shadow: 0 3px 18px color-mix(in srgb, var(--primary) 25%, transparent);
+  }
+  .button:hover {
+    background: color-mix(in srgb, var(--surface) 80%, var(--primary) 15%);
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  }
+  .nav-item.active,
+  .nav-item:hover {
+    color: color-mix(in srgb, var(--primary) 35%, var(--text) 65%);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--primary) 14%, transparent),
+      color-mix(in srgb, var(--primary) 5%, transparent)
+    );
+    border-color: color-mix(in srgb, var(--primary) 15%, transparent);
+  }
+  .nav-item.active:before {
+    background: var(--primary);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--primary) 35%, transparent);
+  }
+  .new-badge,
+  .brand-ai {
+    color: color-mix(in srgb, var(--secondary) 65%, var(--text) 35%);
+    border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+  .studio-promo {
+    border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+    background:
+      radial-gradient(
+        ellipse at 20% 0%,
+        color-mix(in srgb, var(--primary) 10%, transparent),
+        transparent 80%
+      ),
+      color-mix(in srgb, var(--surface) 70%, var(--bg) 30%);
+    border-radius: calc(var(--radius) * 0.85);
+  }
+  .studio-promo button {
+    color: color-mix(in srgb, var(--secondary) 50%, var(--primary) 50%);
+    border-color: color-mix(in srgb, var(--primary) 18%, transparent);
+  }
+  .mini-equalizer i {
+    background: linear-gradient(
+      color-mix(in srgb, var(--secondary) 70%, var(--text) 30%),
+      var(--primary)
+    );
+  }
+  .avatar {
+    color: color-mix(in srgb, var(--secondary) 40%, var(--text) 60%);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 25%, var(--surface)),
+      color-mix(in srgb, var(--surface) 80%, var(--bg) 20%)
+    );
+    border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+  }
+  .stat-card,
+  .preset-card,
+  .project-card,
+  .export-card,
+  .admin-card,
+  .admin-stat,
+  .feature-flag-row,
+  .admin-section-tile,
+  .project-info-strip,
+  .audio-player {
+    background: color-mix(in srgb, var(--surface) 80%, var(--bg) 20%);
+    border-color: var(--border);
+    border-radius: var(--radius);
+  }
+  .preset-card:hover,
+  .project-card:hover,
+  .admin-section-tile:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  }
+  .preset-category,
+  .preset-use,
+  .preset-card-footer,
+  .custom-preset-actions,
+  .project-card-footer,
+  .project-card-preview > span {
+    border-color: var(--border);
+  }
+  .preset-use,
+  .preset-use:hover,
+  .preset-category.three-d {
+    color: color-mix(in srgb, var(--secondary) 35%, var(--primary) 65%);
+  }
+  .text-button,
+  .hero-template-link,
+  .hero-note {
+    color: color-mix(in srgb, var(--text) 35%, var(--primary) 40%);
+  }
+  .text-button:hover {
+    color: color-mix(in srgb, var(--text) 70%, var(--primary) 30%);
+  }
+  .section-heading p,
+  .page-heading p,
+  .library-heading > div > p,
+  .stat-detail,
+  .stat-main strong small,
+  .studio-footer,
+  .recent-empty p,
+  .quick-start-grid > button > svg {
+    color: var(--muted);
+  }
+  .section-heading h2,
+  .recent-empty h3 {
+    color: var(--text);
+  }
+  .featured-tabs button.active,
+  .category-tabs button.active {
+    color: color-mix(in srgb, var(--primary) 40%, var(--text) 60%);
+    border-color: var(--primary);
+  }
+  .featured-tabs button.active:after {
+    background: var(--primary);
+  }
+  .featured-tabs button > span {
+    background: color-mix(in srgb, var(--primary) 13%, transparent);
+    color: color-mix(in srgb, var(--primary) 50%, var(--text) 50%);
+  }
+  .recent-empty,
+  .export-empty,
+  .project-info-strip,
+  .project-card-menu,
+  .editor-project-menu,
+  .admin-table,
+  .admin-table-wrap,
+  .library-feature-banner {
+    border-color: var(--border);
+  }
+  .recent-empty,
+  .library-feature-banner,
+  .editor-toolbar,
+  .editor-workspace,
+  .editor-panel,
+  .layer-panel,
+  .properties-panel,
+  .admin-table th,
+  .admin-table td,
+  .modal,
+  .modal-heading,
+  .notifications-popover,
+  .profile-popover {
+    border-color: var(--border);
+  }
+  .editor-toolbar,
+  .editor-panel,
+  .layer-panel,
+  .properties-panel,
+  .modal,
+  .notifications-popover,
+  .profile-popover,
+  .theme-preview-card {
+    background: color-mix(in srgb, var(--surface) 85%, var(--bg) 15%);
+    border-radius: var(--radius);
+  }
+  .editor-toolbar select,
+  .field-input,
+  .form-stack input,
+  .form-stack textarea,
+  .form-stack select,
+  .release-notes-input input,
+  .layer-row.selected,
+  .admin-table td > select {
+    border-color: var(--border);
+  }
+  .editor-toolbar select,
+  .admin-table td > select,
+  .field-input,
+  .form-stack input,
+  .form-stack textarea,
+  .form-stack select {
+    background: color-mix(in srgb, var(--bg) 70%, var(--surface) 30%);
+    color: var(--text);
+  }
+  .layer-row.selected {
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  }
+  .layer-row-name input,
+  .inspector-layer-type input {
+    color: color-mix(in srgb, var(--text) 80%, var(--primary) 20%);
+  }
+  .field-group > label,
+  .field-group > span,
+  .slider-field > span,
+  .inspector-section h3,
+  .panel-heading,
+  .properties-tabs button,
+  .inspector-layer-type small,
+  .track-analysis-note {
+    color: var(--muted);
+  }
+  .properties-tabs button.active {
+    color: color-mix(in srgb, var(--primary) 35%, var(--text) 65%);
+    border-color: var(--primary);
+  }
+  .slider-field input,
+  .audio-seek,
+  .audio-volume input,
+  .export-progress > i,
+  .meter-bar > i,
+  .storage-bar > i {
+    accent-color: var(--primary);
+  }
+  .play-button,
+  .button.primary,
+  .feature-flag-row input,
+  .theme-toggle-row input {
+    background-color: var(--primary);
+  }
+  .play-button {
+    background: var(--primary);
+  }
+  .modal-backdrop {
+    background: color-mix(in srgb, var(--bg) 80%, transparent 20%);
+  }
+  .modal {
+    box-shadow: 0 24px 100px color-mix(in srgb, var(--bg) 90%, black 10%);
+  }
+  .modal.wide {
+    max-width: 850px;
+  }
+  .editor-project-menu,
+  .project-card-menu,
+  .add-layer-menu {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.7);
+    padding: 6px;
+    z-index: 20;
+  }
+  .editor-project-menu {
+    position: absolute;
+    top: 110px;
+    left: 80px;
+    width: 195px;
+  }
+  .project-card-menu {
+    position: absolute;
+    bottom: 45px;
+    right: 10px;
+    width: 170px;
+  }
+  .add-layer-menu {
+    margin: 0 10px;
+  }
+  .editor-project-menu > button,
+  .project-card-menu > button,
+  .add-layer-menu > button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .editor-project-menu > button:hover,
+  .project-card-menu > button:hover,
+  .add-layer-menu > button:hover {
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    color: var(--text);
+  }
+  .editor-project-menu > button > svg:last-child:not(:first-child),
+  .add-layer-menu > button > svg:last-child {
+    margin-left: auto;
+  }
+  .danger-text {
+    color: #f19aaf;
+  }
+  .selection-inactive {
+    pointer-events: none;
+  }
+  .editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 25px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .editor-preset-option {
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.8);
+    overflow: hidden;
+    background: var(--surface);
+    text-align: left;
+  }
+  .editor-preset-option img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .editor-preset-option > span {
+    display: block;
+    padding: 13px;
+    font-size: 12px;
+  }
+  .editor-preset-option small {
+    display: block;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+  .editor-preset-option:hover {
+    border-color: var(--primary);
+  }
+  .admin-table th {
+    color: var(--muted);
+  }
+  .admin-table td {
+    color: color-mix(in srgb, var(--text) 80%, var(--primary) 20%);
+  }
+  .status-pill {
+    color: color-mix(in srgb, var(--primary) 35%, var(--text) 65%);
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+  }
+  .search-box {
+    background: color-mix(in srgb, var(--surface) 80%, var(--bg) 20%);
+    border-color: var(--border);
+  }
+  .theme-preview-card {
+    background: var(--theme-bg, var(--bg));
+    color: var(--theme-text, var(--text));
+    border-color: var(--theme-border, var(--border));
+    border-radius: var(--theme-radius, var(--radius));
+  }
+  .theme-preview-card .button {
+    background: var(--theme-primary, var(--primary));
+    border-color: transparent;
+    border-radius: calc(var(--theme-radius, var(--radius)) * 0.67);
+  }
+}
+@media (max-width: 760px) {
+  .editor-project-menu {
+    top: 155px;
+    left: 35px;
+  }
+}
+[data-animations="false"] *,
+[data-animations="false"] *:before,
+[data-animations="false"] *:after {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
