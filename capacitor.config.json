@@ -1,0 +1,17 @@
+
+{
+  "appId": "com.devkazzu.kazuaudio",
+  "appName": "KAZU Audio Studio",
+  "webDir": "www",
+  "server": {
+    "url": "https://kazu-audio-studio.vercel.app",
+    "cleartext": false,
+    "allowNavigation": [
+      "kazu-audio-studio.vercel.app"
+    ]
+  },
+  "android": {
+    "backgroundColor": "#0B0714",
+    "allowMixedContent": false
+  }
+}
